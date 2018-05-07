@@ -16,6 +16,6 @@ public class IndexControlador {
 	}
 	@GetMapping("/quiniela")
 	public String quiniela(Model model) {
-		return "quiniela";
+		return "crearquiniela";
 	}
 }
