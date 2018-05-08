@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class LoginControlador {
 
-	@GetMapping("/signin")
+	@GetMapping("/login")
 	public String login(@RequestParam(value="error",required=false) String error,
 			Model model, Principal principal, RedirectAttributes flash) {
 		
@@ -22,6 +22,6 @@ public class LoginControlador {
 		if(error != null) {
 			model.addAttribute("error", "Nombre de usuario o contraseña incorrecta");
 		}
-		return "index";
+		return "login";
 	}
 }

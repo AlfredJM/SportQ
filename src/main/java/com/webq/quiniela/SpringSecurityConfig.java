@@ -15,11 +15,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/","/css/**","/js/**","/imagenes/**").permitAll()
-		.antMatchers("/crearquiniela/**").hasAnyRole("ADMIN")
+		http.authorizeRequests().antMatchers("/","/includes/**","/css/**","/js/**","/imagenes/**").permitAll()
+		.antMatchers("/crearquiniela/**").hasRole("ADMIN")
 		.anyRequest().authenticated()
 		.and()
-		.formLogin().loginPage("/signin")
+		.formLogin().loginPage("/login")
 		.permitAll()
 		.and()
 		.logout().permitAll();
