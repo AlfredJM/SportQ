@@ -10,8 +10,13 @@ import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.webq.quiniela.auth.handler.LoginSuccessHandler;
+
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	private LoginSuccessHandler successHandler;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -19,7 +24,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/crearquiniela/**").hasAnyRole("ADMIN")	
 		.anyRequest().authenticated()
 		.and()
-		.formLogin().loginPage("/login")	//Corresponde al formulario login.ftl
+		.formLogin()
+		.successHandler(successHandler)
+		.loginPage("/login")				//Corresponde al formulario login.ftl
 		.usernameParameter("inputUser")		//El name del input usuario
 		.passwordParameter("inputPassword")	//El name del input password
 		.permitAll()
