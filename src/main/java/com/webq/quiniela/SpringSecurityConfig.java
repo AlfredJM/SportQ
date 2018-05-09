@@ -15,11 +15,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/","/includes/**","/css/**","/js/**","/imagenes/**").permitAll()
-		.antMatchers("/crearquiniela/**").hasRole("ADMIN")
+		http.authorizeRequests().antMatchers("/","/index","/home","/inicio","/includes/**","/css/**","/js/**","/imagenes/**").permitAll()
+		.antMatchers("/crearquiniela/**").hasAnyRole("ADMIN")	
 		.anyRequest().authenticated()
 		.and()
-		.formLogin().loginPage("/login")
+		.formLogin().loginPage("/login")	//Corresponde al formulario login.ftl
+		.usernameParameter("inputUser")		//El name del input usuario
+		.passwordParameter("inputPassword")	//El name del input password
 		.permitAll()
 		.and()
 		.logout().permitAll();
@@ -42,7 +44,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.withUser(users.username("admin")
 				.password("12345")
 				.roles("ADMIN","USER"))
-		.withUser(users.username("user")
+		.withUser(users.username("usuario")
 				.password("12345")
 					.roles("USER"));
 	}
