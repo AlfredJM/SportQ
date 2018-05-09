@@ -10,11 +10,11 @@
 <title>SportQ | Crear Quiniela</title>
 </head>
 <body>
-	<!-- <#include "/includes/header.ftl"> -->
+	<#include "/includes/header.ftl">
 	<div class="container">
 		<div class="border-primary">
 			<h1>Crear Quiniela</h1>
-			<form id="quiniela" action="crearquiniela" role="form">
+			<form id="quiniela" action="/crearquiniela" role="form">
 				<div class="">
 					<div class="card border-primary	text-center">
 						<div class="card-header text-left">Datos de la quiniela</div>
