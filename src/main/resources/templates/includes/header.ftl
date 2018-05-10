@@ -27,12 +27,22 @@
             </div>
           </li>
         </ul>
+
+		<#if autenticado == false>
         <ul class="navbar-nav navbar-right">
-        	<li><a class="btn btn-outline-primary" href="/login">Entrar</a></li>
+        	<li><a class="btn btn-outline-success" href="/login">Entrar</a></li>
         </ul>
-        <form class="form-inline my-2 my-md-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Buscar">
-        </form>
+        <ul class="navbar-nav navbar-right">
+        	<li><a class="btn btn-outline-success" href="/signup">Registrarme</a></li>
+        </ul>
+        <#else>
+        <ul class="navbar-nav navbar-right">
+        	<form id="logoutForm" action="/logout" method="post">
+        		<li><button class="btn btn-outline-danger" onclick="document.getElementById('logoutForm').submit();">Salir</button></li>
+        		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        	</form>
+        </ul>
+        </#if>
       </div>
     </div>
   </nav>

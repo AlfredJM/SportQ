@@ -31,7 +31,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.passwordParameter("inputPassword")	//El name del input password
 		.permitAll()
 		.and()
-		.logout().permitAll();
+		.logout().logoutSuccessUrl("/")
+		.permitAll();
 	}
 
 	@Autowired

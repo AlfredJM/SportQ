@@ -13,9 +13,7 @@
 <body>
 	<#include "/includes/header.ftl">
 	<#include "/includes/alerts.ftl">
-  <div class="container">
-    <h1> ${saludo}</h1>
-  </div>
+
 	<#include "/includes/footer.ftl">
 </body>
 </html>
