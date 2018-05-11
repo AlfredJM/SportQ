@@ -10,37 +10,41 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#" >Home</a>
+            <a class="nav-link" href="/home" >Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="/categoria/beisbol">B&eacute;isbol</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="/categoria/futbol">Futbol</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="menudropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
+          <li class="nav-item">
+            <a class="nav-link" href="/categoria/tennis">Tennis</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-right">
+		<#if SPRING_SECURITY_CONTEXT.authentication.authenticated == false>
+        	<li><a class="btn btn-sm btn-outline-secondary" href="/login">Entrar</a></li>
+        	<li><a class="btn btn-sm btn-outline-secondary" href="/signup">Registrarme</a></li>
+        <#else>
+          <li class="dropdown show">
+            <a class="btn btn-secondary dropdown-toogle" href="#" id="menudropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${SPRING_SECURITY_CONTEXT.authentication.name}</a>
+            
+            <div class="dropdown-menu" aria-labelledby="menudropdown">
+            <#list SPRING_SECURITY_CONTEXT.authentication.authorities as authority>
+	            <#if authorithy == ROLE_ADMIN>
+	            	<a class="dropdown-item" href="/crearquiniela">Crear quiniela</a>
+	              	<a class="dropdown-item" href="/dashboard">Dashboard</a>
+	              	<#break>
+	            </#if>
+            </#list>
+	        	<form id="logoutForm" action="/logout" method="post">
+	        		<button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();">Salir</button></li>
+	        		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	        	</form>
             </div>
           </li>
-        </ul>
 
-		<#if autenticado == false>
-        <ul class="navbar-nav navbar-right">
-        	<li><a class="btn btn-outline-success" href="/login">Entrar</a></li>
-        </ul>
-        <ul class="navbar-nav navbar-right">
-        	<li><a class="btn btn-outline-success" href="/signup">Registrarme</a></li>
-        </ul>
-        <#else>
-        <ul class="navbar-nav navbar-right">
-        	<form id="logoutForm" action="/logout" method="post">
-        		<li><button class="btn btn-outline-danger" onclick="document.getElementById('logoutForm').submit();">Salir</button></li>
-        		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        	</form>
         </ul>
         </#if>
       </div>
