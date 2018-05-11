@@ -32,10 +32,10 @@
             
             <div class="dropdown-menu" aria-labelledby="menudropdown">
             <#list SPRING_SECURITY_CONTEXT.authentication.authorities as authority>
-	            <#if authorithy == ROLE_ADMIN>
+	            <#if authority == "ROLE_ADMIN">
 	            	<a class="dropdown-item" href="/crearquiniela">Crear quiniela</a>
 	              	<a class="dropdown-item" href="/dashboard">Dashboard</a>
-	              	<#break>
+	              	
 	            </#if>
             </#list>
 	        	<form id="logoutForm" action="/logout" method="post">
