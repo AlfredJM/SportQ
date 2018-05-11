@@ -25,7 +25,7 @@
       <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
         <div class="col-md-6 px-0">
           <h1 class=" font-italic">SportQ ${categoria}</h1>
-          <p class="lead my-3">Busca y participa en las quinielas que desees aqu&iacute;</p>
+          <p class="lead my-3">Busca y participa en las quinielas que desees <a href="/ligas">aqu&iacute;</a></p>
         </div>
       </div>
 

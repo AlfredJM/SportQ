@@ -1,0 +1,26 @@
+
+ 
+
+.botones{
+
+	margin-left: 35%;
+	margin-right: 35%
+}
+
+.botones button {
+
+	padding: 15px;
+	margin: 15px;
+}
+
+.inicio{
+		background: url(../imagenes/indice.jpeg);
+		padding: 15px;
+}
+
+#codigo{
+
+	text-align: center;
+	margin-right: 30%;
+	margin-left: 30%;
+}
