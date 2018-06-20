@@ -33,11 +33,6 @@ public class LigasControlador {
 		ArrayList<Quiniela> lista;
 		lista = new ArrayList<>();
 
-		String reglamento = "Puntuacion: 10 puntos por acertar el el resultado final, 5 puntos al acertar el score de un equipo ";
-		lista.add(new Quiniela(1, "La Quiniela del Mundial", reglamento, "Futbol"));
-		lista.add(new Quiniela(2, "Champions League", reglamento, "Futbol"));
-		lista.add(new Quiniela(3, "NBA Action", reglamento, "Baloncesto"));
-
 		return lista;
 	}
 

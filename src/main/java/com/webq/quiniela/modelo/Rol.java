@@ -1,61 +1,48 @@
 package com.webq.quiniela.modelo;
 
-import java.util.List;
+import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="rol", schema="public")
-@PrimaryKeyJoinColumn(name="id")
-public class Rol {
+@Table(name = "rol", uniqueConstraints= {@UniqueConstraint(columnNames= {"usuario_id", "authority"})})
+public class Rol implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	@Column(name="id")
-	private int id;
-	@Column(name="nombre")
-	private String nombre;
-    @OneToMany(cascade= CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinColumn(name="rol")
-    private List<Usuario> usuarios;
-	
-	public Rol(String nombre) {
-		super();
-		this.nombre = nombre;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")	
+	private Long id;
+
+	@Column(name = "authority")
+	private String authority;
+
+	public Rol(String authority) {
+		this.authority = authority;
 	}
 
 	public Rol() {}
-
-	public int getId() {
+	
+	public Long getId() {
 		return id;
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
-
-	public List<Usuario> getUsuarios() {
-		return usuarios;
-	}
-
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public String getAuthority() {
+		return authority;
 	}
 
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
 }

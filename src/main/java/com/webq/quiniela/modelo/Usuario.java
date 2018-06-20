@@ -1,118 +1,171 @@
 package com.webq.quiniela.modelo;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
-@Table(name="usuario", schema="public")
-@PrimaryKeyJoinColumn(name="id")
+@Table(name="usuario", uniqueConstraints= {@UniqueConstraint(columnNames= {"username", "email"})})
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	@Column(name="id")	
-	private int id;
-	@Column(name="user")
-	private String user;
-	@Column(name="password")
-	private String password;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
+	private Long id;
+	
+	@Column(name="username")
+	private String username;
+	@Column(name="clave")
+	private String clave;
 	@Column(name="email")
 	private String email;
-	@Column(name="fecha_creacion")
-	private String fecha_creacion;
+	@Column(name="fecha_creacion", nullable = false, updatable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreatedDate
+	private Date fechaCreacion;
 	@Column(name="ultimo_acceso")
-	private String ultimo_acceso;
+	@Temporal(TemporalType.TIMESTAMP)
+	@LastModifiedDate
+	private Date ultimoAcceso;
 	@Column(name="estatus")
-	private char estatus;
-	@ManyToOne
-	@JoinColumn(name="rol")
-	private Rol rol;
+	private boolean estatus;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //Unidireccional
+	@JoinColumn(name = "usuario_id")
+	private List<Rol> roles;
+	
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL) //Bidireccional LAZY por defecto
+	private List<Acceso> accesos;
+	
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)//Bidireccional LAZY por defecto
+    private List<UsuarioQuiniela> usuarioQuinielas;
+	
+	@ManyToMany//Bidireccional LAZY por defecto
+	@JoinTable(name = "solicitud_usuario", joinColumns = @JoinColumn(name = "usuario_id"), 
+    inverseJoinColumns = @JoinColumn(name = "solicitud_id"))
+	private List<Solicitud> solicitudes;
 
-	public Usuario(String user, String password, String email, String fecha_creacion, String ultimo_acceso, char estatus, Rol rol) {
-		super();
-		this.user = user;
-		this.password = password;
+	public Usuario(String username, String clave, String email, Date fechaCreacion, Date ultimoAcceso,	boolean estatus, List<Rol> roles, List<Acceso> accesos, List<UsuarioQuiniela> usuarioQuinielas, List<Solicitud> solicitudes) {
+		this.username = username;
+		this.clave = clave;
 		this.email = email;
-		this.fecha_creacion = fecha_creacion;
-		this.ultimo_acceso = ultimo_acceso;
+		this.fechaCreacion = fechaCreacion;
+		this.ultimoAcceso = ultimoAcceso;
 		this.estatus = estatus;
-		this.rol = rol;
+		this.roles = roles;
+		this.accesos = accesos;
+		this.usuarioQuinielas = usuarioQuinielas;
+		this.solicitudes = solicitudes;
 	}
 
 	public Usuario() {}
-	
-	public int getId() {
+
+	public Long getId() {
 		return id;
 	}
 
-	public String getUser() {
-		return user;
+	public String getUsername() {
+		return username;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getClave() {
+		return clave;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public String getFecha_creacion() {
-		return fecha_creacion;
+	public Date getFechaCreacion() {
+		return fechaCreacion;
 	}
 
-	public String getUltimo_acceso() {
-		return ultimo_acceso;
+	public Date getUltimoAcceso() {
+		return ultimoAcceso;
 	}
-	
-	public char getEstatus() {
+
+	public boolean getEstatus() {
 		return estatus;
 	}
 
-	public Rol getRol() {
-		return rol;
+	public List<Rol> getRoles() {
+		return roles;
 	}
-	
-	public void setId(int id) {
+
+	public List<Acceso> getAccesos() {
+		return accesos;
+	}
+
+	public List<UsuarioQuiniela> getUsuarioQuinielas() {
+		return usuarioQuinielas;
+	}
+
+	public List<Solicitud> getSolicitudes() {
+		return solicitudes;
+	}
+
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setClave(String clave) {
+		this.clave = clave;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public void setFecha_creacion(String fecha_creacion) {
-		this.fecha_creacion = fecha_creacion;
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
 	}
 
-	public void setUltimo_acceso(String ultimo_acceso) {
-		this.ultimo_acceso = ultimo_acceso;
+	public void setUltimoAcceso(Date ultimoAcceso) {
+		this.ultimoAcceso = ultimoAcceso;
 	}
-	
-	public void setEstatus(char estatus) {
+
+	public void setEstatus(boolean estatus) {
 		this.estatus = estatus;
 	}
 
-	public void setRol(Rol rol) {
-		this.rol = rol;
+	public void setRoles(List<Rol> roles) {
+		this.roles = roles;
+	}
+
+	public void setAccesos(List<Acceso> accesos) {
+		this.accesos = accesos;
+	}
+
+	public void setUsuarioQuinielas(List<UsuarioQuiniela> usuarioQuinielas) {
+		this.usuarioQuinielas = usuarioQuinielas;
+	}
+
+	public void setSolicitudes(List<Solicitud> solicitudes) {
+		this.solicitudes = solicitudes;
 	}
 }
